@@ -34,12 +34,6 @@ class App extends React.Component {
 
   async lookUpWeather () {
     const query = this.state.query.replace("gmina ", "")
-    const result = await fetch(`${api.base}weather?q=${this.state.query}&units=metric&APPID=${api.key}`)
-    const resultJSON = await result.json()
-  }
-
-  async lookUpWeather () {
-    const query = this.state.query.replace("gmina ", "")
     const result = await fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
     const resultJSON = await result.json()
 
