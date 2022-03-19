@@ -1,4 +1,6 @@
 import React from 'react';
+import Weatherbox from './Weatherbox.js';
+
 
 const api = {
   key: "dc862ca896c6425009a609e2e15221cb",
@@ -27,6 +29,7 @@ class App extends React.Component {
 
     this.setState({query: resultJSON[0].name})
     this.lookUpWeather()
+
   }
 
   async lookUpWeather () {
@@ -43,16 +46,10 @@ class App extends React.Component {
     }
   }
 
-  dateBuilder (d) {
-    let months = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
-    let days = ["Niedziela", "Poniedziałek", "Wtorek", "Środa", "Czwartek", "Piątek", "Sobota"];
-
-    let day = days[d.getDay()];
-    let date = d.getDate();
-    let month = months[d.getMonth()];
-    let year = d.getFullYear();
-
-    return `${day} ${date} ${month} ${year}`
+  search (evt) {
+    if (evt.key === "Enter") {
+      this.lookUpWeather()
+    }
   }
 
   render() {
@@ -71,18 +68,7 @@ class App extends React.Component {
             />
           </div>
           {(typeof this.state.weather.main != "undefined") ? (
-            <div>
-              <div className="location-box">
-                <div className="location">{this.state.weather.name}, {this.state.weather.sys.country}</div>
-                <div className="date">{this.dateBuilder(new Date())}</div>
-              </div>
-              <div className="weather-box">
-                <div className="temp">
-                  {Math.round(this.state.weather.main.temp)}°c
-                </div>
-                <div className="weather">{this.state.weather.weather[0].main}</div>
-              </div>
-            </div>
+            <Weatherbox weather={this.state.weather} />
           ) : ''}
         </main>
         <footer>Strona stworzona przez Jakuba Piwtoraka</footer>
