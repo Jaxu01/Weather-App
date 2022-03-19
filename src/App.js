@@ -2,7 +2,6 @@ import React from 'react';
 import Weatherbox from './Weatherbox.js';
 
 
-
 const api = {
   key: "dc862ca896c6425009a609e2e15221cb",
   base: "https://api.openweathermap.org/data/2.5/"
@@ -30,14 +29,27 @@ class App extends React.Component {
 
     this.setState({query: resultJSON[0].name})
     this.lookUpWeather()
+
   }
 
   async lookUpWeather () {
     const query = this.state.query.replace("gmina ", "")
     const result = await fetch(`${api.base}weather?q=${this.state.query}&units=metric&APPID=${api.key}`)
     const resultJSON = await result.json()
+  }
+
+  async lookUpWeather () {
+    const query = this.state.query.replace("gmina ", "")
+    const result = await fetch(`${api.base}weather?q=${query}&units=metric&APPID=${api.key}`)
+    const resultJSON = await result.json()
 
     this.setState({query: "", weather: resultJSON});
+  }
+
+  search (evt) {
+    if (evt.key === "Enter") {
+      this.lookUpWeather()
+    }
   }
 
   search (evt) {
